@@ -55,5 +55,5 @@ void vStringList::SetItem(int n,String s)
 
 int vStringList::Length()
 {
-	return real_len;
+	return len;
 }
