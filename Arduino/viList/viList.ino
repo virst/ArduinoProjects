@@ -15,6 +15,9 @@ void setup() {
  for(int i=0;i<17;i++)
     l.Add(i);
 
+ l.DeleteAt(5);
+ l.DeleteAt(7);
+
  for(int i=0;i<l.Length();i++)
     Serial.println(l.GetItem(i),DEC);
  
