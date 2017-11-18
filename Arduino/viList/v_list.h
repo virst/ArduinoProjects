@@ -1,6 +1,7 @@
 #ifndef v_list_h
 #define v_list_h
 #include "Arduino.h"
+#include "ee_utils.h"
 
 template <typename T>
 class vList
@@ -9,12 +10,7 @@ class vList
 
 	vList(void)
 	{
-		len = 0;
-		real_len = 5;
-		growth_mult = 1;
-		growth_plus = 5;
-
-		ss = new T[real_len];
+		Clear();
 	}
 
 	~vList(void)
@@ -48,7 +44,7 @@ class vList
 	T GetItem(int n)
 	{
 		if(n>=len)
-			return new T;
+			return  T();
 		return ss[n];
 	}
 
@@ -59,10 +55,41 @@ class vList
 		ss[n] = s;
 	}
 
+  void Clear()
+  {
+     delete ss;
+     len = 0;
+    real_len = 5;
+    growth_mult = 1;
+    growth_plus = 5;
+
+    ss = new T[real_len];
+  }
+
 	int Length()
 	{
 		return len;
 	}
+
+  void EEPROM_read()
+  {
+      int l = eui.EEPROM_read(0);
+      int a = eui.GetTypeSize();
+      Clear();
+      for(int i=0;i<l;i++)
+        { 
+            Add(eut.EEPROM_read(a));
+            a = a + eut.GetTypeSize();
+        }
+         
+  }
+
+  void EEPROM_write()
+  {
+    int a = eui.EEPROM_write(0,Length());
+    for(int i=0;i<Length();i++)
+       a = eut.EEPROM_write(a,GetItem(i));
+  }
 
 	private:
 	void chSizeMas()
@@ -75,6 +102,8 @@ class vList
 		real_len = tmp_len;
 		ss = tmp;
 	}
+
+ 
 	
 	T *ss;
 	int len;
@@ -82,6 +111,8 @@ class vList
 	int tmp_len;
 	int growth_mult;
 	int growth_plus;
+  ee_utils<T> eut;
+  ee_utils<int> eui;
 };
 
 #endif

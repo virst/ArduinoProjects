@@ -10,9 +10,8 @@ void setup() {
   
   Serial.println("begin");
   
- vList<int> l;
- 
- for(int i=0;i<17;i++)
+ vList<int> l; 
+ /*for(int i=0;i<17;i++)
     l.Add(i);
 
  l.DeleteAt(5);
@@ -20,7 +19,15 @@ void setup() {
 
  for(int i=0;i<l.Length();i++)
     Serial.println(l.GetItem(i),DEC);
+
+
+ l.EEPROM_write();*/
+
+ l.EEPROM_read();
+ for(int i=0;i<l.Length();i++)
+    Serial.println(l.GetItem(i),DEC);
  
+ Serial.println("end");     
 
 }
 
