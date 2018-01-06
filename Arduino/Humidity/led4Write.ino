@@ -9,7 +9,7 @@ void led_stp(){
 	pinMode(DIO, OUTPUT);
 }
 
-// byte digitBuffer[4];
+int nn[4];
 
 const byte dotByte = 0b01111111;
 
@@ -34,22 +34,23 @@ const byte chr[4] = { // маска для разряда
 
 void showDisplay(int n){
 
-	String s = String(n);
-	for(;s.length()<4;)
-		s = "0" + s;         
+  nn[0] = n / 1000; n = n - nn[0] * 1000;
+  nn[1] = n / 100; n = n - nn[1] * 100;
+  nn[2] = n / 10; n = n - nn[2] * 10;
+  nn[3] = n;      
 
 	//выполняем один проход по всем цифрам
 	for(byte i = 0; i < 4; i++)
 	{
 		digitalWrite(RCLK, LOW); // Открываем защелку
-		shiftOut(DIO,SCLK,MSBFIRST, digit[(int)String(s[i]).toFloat()]); // Отправляем байт с "числом"
+		shiftOut(DIO,SCLK,MSBFIRST, digit[nn[i]]); // Отправляем байт с "числом"
 		shiftOut(DIO,SCLK,MSBFIRST, chr[i]); // выбираем разряд
 		digitalWrite(RCLK, HIGH); // Защелкиваем регистры (завтавляем защелку выставить состояние выводов соответственно отправленным байтам)
 		delayMicroseconds(1000);
 	}
 }
 
-void showDisplay(float n){
+void showDisplayF(float n){
 
 	String s = String(n);
 	int nk = 4;
