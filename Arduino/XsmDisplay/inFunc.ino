@@ -27,9 +27,8 @@ void appInputCommand(String instr)
     leds[param] = CRGB(r,g,b);    
    
     FastLED.show();
-  }else if(command == "RGB"){
-    blinkIntervals[param] = val.toInt();
-    
+  }else if(command == "BLK"){
+    blinkIntervals[param] = val.toInt();    
   }
 }
 

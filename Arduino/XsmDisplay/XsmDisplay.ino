@@ -5,7 +5,7 @@
 #define COUNT_BUTTONS 6 
 #define LCD_ROWS 4
 #define LCD_COLS 20  
-#define NUM_LEDS 2
+#define NUM_LEDS 4
 #define DATA_PIN 10
 
 CRGB leds[NUM_LEDS];
@@ -53,10 +53,11 @@ void loop() {
  {
    buttons1[i].tick();  
  } 
- 
+
  if(Serial.available() > 0)
  {
-    appInputCommand(readln());
+    appInputCommand(readln()); 
+    lcd.backlight();
  }   
 
  blinkTick();

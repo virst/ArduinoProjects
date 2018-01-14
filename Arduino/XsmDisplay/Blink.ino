@@ -14,8 +14,8 @@ void initBlink()
       leds_tmp[i] = CRGB(0,0,0); 
     }
 
-        blinkIntervals[0] = 100;
-    leds_tmp[0] = CRGB(200,0,0);
+  //blinkIntervals[0] = 100;
+  //leds_tmp[0] = CRGB(200,0,0);
 }
 
 void blinkTick()
